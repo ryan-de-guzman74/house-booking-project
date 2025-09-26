@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Flex Living Reviews Dashboard
 
 A comprehensive reviews management system for Flex Living properties, built with Next.js and designed to integrate with the Hostaway API.
@@ -268,3 +269,7 @@ This project is proprietary to Flex Living.
 ---
 
 **Built with ❤️ for Flex Living**
+=======
+# house-booking-project
+Start-up project for real estate or house rental platform.
+>>>>>>> a0eea718630de5520191fb76e7fec6d9f6443cb4
