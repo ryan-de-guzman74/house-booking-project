@@ -122,9 +122,9 @@ export default function PropertyPage() {
             
             // Filter approved reviews for this specific property
             const propertyReviews = (data.approvedReviews || []).filter(review => 
-              review.listing === expectedListingName
+              review.listingName === expectedListingName
             );
-            
+            console.log("property reviews: ", propertyReviews);
             setApprovedReviews(propertyReviews);
             setLoading(false);
           })
@@ -365,10 +365,10 @@ export default function PropertyPage() {
                       {/* Text column - takes 3/4 width */}
                       <div className="col-span-3">
                         <header className="flex items-center mb-4">
-                          <h3 className="text-xl font-bold text-gray-900 mr-4">{review.guest}</h3>
-                          <time className="text-sm text-gray-500">{new Date(review.date).toLocaleDateString()}</time>
+                          <h3 className="text-xl font-bold text-gray-900 mr-4">{review.guestName}</h3>
+                          <time className="text-sm text-gray-500">{new Date(review.submittedAt).toLocaleDateString()}</time>
                         </header>
-                        <p className="text-gray-700 leading-relaxed text-lg">{review.review}</p>
+                        <p className="text-gray-700 leading-relaxed text-lg">{review.publicReview}</p>
                       </div>
                       
                       {/* Rating column - takes 1/4 width */}
@@ -376,7 +376,7 @@ export default function PropertyPage() {
                         <div className="flex items-center text-yellow-400">
                           <div className="flex">
                             {[...Array(5)].map((_, i) => {
-                              const rating = review.rating / 2; // Convert 10-scale to 5-scale
+                              const rating = review.overallRating / 2; // Convert 10-scale to 5-scale
                               const starRating = i + 1;
                               let fillPercentage = 0;
                               
@@ -403,7 +403,7 @@ export default function PropertyPage() {
                               );
                             })}
                           </div>
-                          <span className="text-lg font-bold text-gray-900 ml-2">{review.rating}</span>
+                          <span className="text-lg font-bold text-gray-900 ml-2">{review.overallRating}</span>
                         </div>
                       </div>
                     </div>
