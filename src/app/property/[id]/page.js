@@ -106,7 +106,7 @@ export default function PropertyPage() {
         setProperty(propertyData);
         
         // Fetch approved reviews for this property
-        fetch("/api/public/reviews/approved")
+        fetch("/api/reviews/approved")
           .then(res => res.json())
           .then(data => {
             // Create mapping from property ID to listing name
