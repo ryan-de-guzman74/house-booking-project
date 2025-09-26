@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function AdminLogin() {
@@ -9,11 +9,16 @@ export default function AdminLogin() {
     password: ''
   });
 
+  useEffect(() => {
+    document.title = "Sign In";
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Simple demo authentication
     if (formData.username === 'admin' && formData.password === 'admin123') {
-      // In a real app, you'd handle authentication properly
+      // Set authentication flag
+      localStorage.setItem('adminAuthenticated', 'true');
       window.location.href = '/admin/dashboard';
     } else {
       alert('Invalid credentials. Use admin/admin123');

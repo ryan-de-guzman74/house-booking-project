@@ -7,6 +7,8 @@ import Link from 'next/link';
 export default function AdminPropertyPage() {
   const params = useParams();
   const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const propertyId = params.id;
   const [property, setProperty] = useState(null);
   const [editableProperty, setEditableProperty] = useState(null);
@@ -18,6 +20,33 @@ export default function AdminPropertyPage() {
   const [dataSource, setDataSource] = useState('mock-data');
   const [countdown, setCountdown] = useState(10);
   const [isApiActive, setIsApiActive] = useState(true);
+
+  // Set page title
+  useEffect(() => {
+    document.title = "Admin | Edit";
+  }, []);
+
+  // Authentication check
+  useEffect(() => {
+    const checkAuth = () => {
+      const authStatus = localStorage.getItem('adminAuthenticated');
+      if (authStatus === 'true') {
+        setIsAuthenticated(true);
+      } else {
+        router.push('/admin/login');
+      }
+      setIsCheckingAuth(false);
+    };
+
+    checkAuth();
+  }, [router]);
+
+  // Logout function
+  const handleLogout = () => {
+    localStorage.removeItem('adminAuthenticated');
+    setIsAuthenticated(false);
+    router.push('/admin/login');
+  };
 
   // Mock property data - in a real app, this would come from an API
   const mockProperties = {
@@ -189,7 +218,7 @@ export default function AdminPropertyPage() {
     };
 
     loadProperty();
-  }, [propertyId, isApiActive, mockProperties]);
+  }, [propertyId]); // Removed isApiActive to stop infinite loop
 
   const handleEdit = () => {
     setEditing(true);
@@ -263,6 +292,28 @@ export default function AdminPropertyPage() {
     }));
   };
 
+  // Show loading state while checking authentication
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Loading...</h2>
+          <p className="text-gray-600">Checking authentication</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect to login if not authenticated
+  if (!isAuthenticated) {
+    return null; // This will be handled by the useEffect redirect
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -312,6 +363,19 @@ export default function AdminPropertyPage() {
           </div>
         </div>
       </header>
+
+      {/* Fixed Logout Button - Center Right of Screen */}
+      <div className="fixed top-1/2 right-8 transform -translate-y-1/2 z-50">
+        <button
+          onClick={handleLogout}
+          className="px-6 py-4 bg-red-600 hover:bg-red-700 text-white rounded-full text-sm font-semibold flex items-center space-x-3 transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span>Logout</span>
+        </button>
+      </div>
 
       {/* Success Message */}
       {message && (
@@ -364,15 +428,15 @@ export default function AdminPropertyPage() {
                         type="text"
                         value={editableProperty.price}
                         onChange={(e) => handleChange('price', e.target.value)}
-                        className="text-7xl font-bold text-blue-600 bg-transparent border-b-2 border-blue-500 focus:outline-none text-right"
-                        style={{ width: '150px' }}
+                        className="text-7xl font-bold text-blue-600 bg-transparent border-b-2 border-blue-500 focus:outline-none text-right mx-8"
+                        style={{ width: '200px' }}
                       />
                       <span className="text-2xl text-gray-600">per night</span>
                     </>
                   ) : (
                     <>
-                      <span className="text-7xl font-bold text-blue-600">{property.price}</span>
-                      <span className="text-2xl text-gray-600">per night</span>
+                      <span className="text-7xl font-bold text-blue-600 mx-8">{property.price} </span>
+                      <span className="text-2xl text-gray-600">/ per night</span>
                     </>
                   )}
                 </div>

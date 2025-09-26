@@ -1,17 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import RatingChart from "../../components/RatingChart";
 
 export default function AdminDashboardPage() {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [reviews, setReviews] = useState([]);
   const [properties, setProperties] = useState({});
   const [approvedReviews, setApprovedReviews] = useState(new Set());
   const [filterChannel, setFilterChannel] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
   const [dataSource, setDataSource] = useState(null);
-  const [countdown, setCountdown] = useState(10);
-  const [isCountingDown, setIsCountingDown] = useState(false);
-  const [showDataUpdateNotification, setShowDataUpdateNotification] = useState(false);
+  // Removed unused state variables to stop infinite loops
   const [isChartExpanded, setIsChartExpanded] = useState(false);
   const [sortField, setSortField] = useState('date');
   const [sortDirection, setSortDirection] = useState('desc');
@@ -56,46 +58,47 @@ export default function AdminDashboardPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Countdown timer effect
+  // Authentication check
   useEffect(() => {
-    let interval;
-    if (isCountingDown && countdown > 0) {
-      interval = setInterval(() => {
-        setCountdown(prev => {
-          if (prev <= 1) {
-            setIsCountingDown(false);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isCountingDown, countdown]);
+    document.title = "Admin | Dashboard";
+  }, []);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const authStatus = localStorage.getItem('adminAuthenticated');
+      if (authStatus === 'true') {
+        setIsAuthenticated(true);
+      } else {
+        router.push('/admin/login');
+      }
+      setIsCheckingAuth(false);
+    };
+
+    checkAuth();
+  }, [router]);
+
+  // Logout function
+  const handleLogout = () => {
+    localStorage.removeItem('adminAuthenticated');
+    setIsAuthenticated(false);
+    router.push('/admin/login');
+  };
 
 
-  // Fetch reviews from API with integrated 10-second timeout and polling
+  // Load data once - NO TIMEOUT, NO POLLING, NO INFINITE LOOPS
   useEffect(() => {
-    setIsLoading(true);
-    setIsCountingDown(true);
-    setCountdown(10);
-    
-    let timeoutId;
-    let pollingInterval;
-    let hasReceivedRealData = false;
-    
-    const loadPropertyData = async () => {
+    const loadData = async () => {
       try {
-        // Load property data from shared mock data
-        const response = await fetch('/admin/api/reviews/hostaway');
-        const data = await response.json();
+        setIsLoading(true);
         
-        // The mock data is now shared, so we can get property data from the same source
-        // For now, we'll use the property mapping from the reviews
-        const propertyMap = {};
+        // Load reviews data once
+        const reviewsResponse = await fetch("/admin/api/reviews/hostaway");
+        const reviewsData = await reviewsResponse.json();
+        setReviews(reviewsData.reviews);
+        setDataSource(reviewsData.source);
+        
+        // Load property data once
         const propertyIds = ["29-shoreditch-heights", "15-camden-square", "42-kings-cross", "88-notting-hill"];
-        
-        // Load property data from properties API
         const propertyPromises = propertyIds.map(id => 
           fetch(`/admin/api/properties/${id}`)
             .then(res => res.json())
@@ -104,98 +107,29 @@ export default function AdminDashboardPage() {
         );
         
         const propertyResults = await Promise.all(propertyPromises);
+        const propertyMap = {};
         propertyResults.forEach(({ id, property }) => {
           if (property) {
             propertyMap[id] = property;
           }
         });
-        
         setProperties(propertyMap);
-        console.log('Property data loaded from shared mock data:', propertyMap);
-      } catch (error) {
-        console.log('Error loading property data:', error.message);
-      }
-    };
-
-    const loadMockDataFirst = async () => {
-      try {
-        // Load property data first
-        await loadPropertyData();
         
-        // Load mock data immediately
-        const mockResponse = await fetch("/admin/api/reviews/hostaway");
-        const mockData = await mockResponse.json();
+        // Load approved reviews once
+        const approvedResponse = await fetch("/admin/api/reviews/approved");
+        const approvedData = await approvedResponse.json();
+        setApprovedReviews(new Set(approvedData.approvedReviews.map(r => r.id)));
         
-        if (mockData.source === 'mock-data') {
-          console.log('Loading mock data immediately...');
-          setReviews(mockData.reviews);
-          setDataSource('mock-data');
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.log('Error loading mock data:', error.message);
-      }
-    };
-    
-    const tryFetchRealData = async () => {
-      try {
-        console.log(`Attempting to fetch real data... ${countdown}s remaining`);
-        const response = await fetch("/admin/api/reviews/hostaway");
-        const data = await response.json();
+        setIsLoading(false);
         
-        if (data.source === 'hostaway-api' && !hasReceivedRealData) {
-          console.log('Real data received! Updating dashboard...');
-          setReviews(data.reviews);
-          setDataSource(data.source);
-          hasReceivedRealData = true;
-          
-          // Show notification for real data
-          setShowDataUpdateNotification(true);
-          setTimeout(() => setShowDataUpdateNotification(false), 5000);
-          
-          clearTimeout(timeoutId);
-          clearInterval(pollingInterval);
-          return true;
-        }
       } catch (error) {
-        console.log('API call failed:', error.message);
+        console.log('Error loading data:', error.message);
+        setIsLoading(false);
       }
-      return false;
     };
     
-    // Load mock data first
-    loadMockDataFirst();
-    
-    // Set up polling every 2 seconds for real data
-    pollingInterval = setInterval(async () => {
-      if (!hasReceivedRealData) {
-        const success = await tryFetchRealData();
-        if (success) {
-          clearInterval(pollingInterval);
-        }
-      }
-    }, 2000);
-    
-    // Set up 10-second timeout
-    timeoutId = setTimeout(() => {
-      if (!hasReceivedRealData) {
-        console.log('10-second timeout reached, staying with mock data');
-        setIsCountingDown(false);
-        clearInterval(pollingInterval);
-      }
-    }, 10000);
-    
-    // Fetch approved reviews
-    fetch("/admin/api/reviews/approved")
-      .then(res => res.json())
-      .then(data => setApprovedReviews(new Set(data.approvedReviews.map(r => r.id))))
-      .catch(err => console.error("Error fetching approved reviews:", err));
-    
-    return () => {
-      clearTimeout(timeoutId);
-      clearInterval(pollingInterval);
-    };
-  }, [countdown]);
+    loadData();
+  }, []); // Empty dependency array - runs only once
 
   // Handle approve/reject toggle
   const toggleApproval = async (reviewId) => {
@@ -264,21 +198,31 @@ export default function AdminDashboardPage() {
       return sortDirection === "desc" ? -comparison : comparison;
     });
 
+  // Show loading state while checking authentication
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Loading...</h2>
+          <p className="text-gray-600">Checking authentication</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect to login if not authenticated
+  if (!isAuthenticated) {
+    return null; // This will be handled by the useEffect redirect
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Data Update Notification */}
-      {showDataUpdateNotification && (
-        <div className="fixed top-4 right-4 z-50 bg-green-600 text-white px-6 py-4 rounded-2xl shadow-2xl animate-bounce border border-green-500">
-          <div className="flex items-center">
-            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <span className="font-semibold">Real data received! Dashboard updated with live Hostaway data.</span>
-          </div>
-        </div>
-      )}
+      {/* Data Update Notification - Removed to fix infinite loops */}
       
       {/* Fixed Admin Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 shadow-2xl py-5">
@@ -313,9 +257,7 @@ export default function AdminDashboardPage() {
                        : 'bg-blue-900 text-gray-400'
                    }`}>
                      <span>Real Data</span>
-                     {isCountingDown && countdown > 0 && (
-                       <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                     )}
+                    {/* Removed countdown spinner to fix infinite loops */}
                    </div>
                    
                    {/* Mock Data Item */}
@@ -577,8 +519,8 @@ export default function AdminDashboardPage() {
               <h3 className="text-xl font-bold text-gray-900 mb-2">Accessing Real Data</h3>
               <p className="text-gray-600 mb-6">Connecting to Hostaway API...</p>
               <div className="bg-blue-50 rounded-2xl p-6 max-w-md mx-auto">
-                <div className="text-4xl font-bold text-blue-600 mb-2">{countdown}</div>
-                <p className="text-sm text-gray-600">seconds remaining before finalizing with mock data</p>
+                <div className="text-4xl font-bold text-blue-600 mb-2">Loading...</div>
+                <p className="text-sm text-gray-600">Fetching data from API</p>
               </div>
             </div>
           ) : (reviews?.length || 0) === 0 ? (
@@ -972,6 +914,19 @@ export default function AdminDashboardPage() {
           </div>
         </div>
       )}
+
+      {/* Fixed Logout Button - Center Right of Screen */}
+      <div className="fixed top-1/2 right-8 transform -translate-y-1/2 z-50">
+        <button
+          onClick={handleLogout}
+          className="px-6 py-4 bg-red-600 hover:bg-red-700 text-white rounded-full text-sm font-semibold flex items-center space-x-3 transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span>Logout</span>
+        </button>
+      </div>
     </div>
   );
 }

@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Flex Living Reviews Dashboard",
-  description: "Manage and approve guest reviews for Flex Living properties",
+  title: "Flex Living",
+  description: "Furnished Apartments designed with you in Mind. All you have to do is unpack your bags and start living.",
 };
 
 export default function RootLayout({ children }) {

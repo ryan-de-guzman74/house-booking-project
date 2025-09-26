@@ -151,6 +151,10 @@ export default function Home() {
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
+    document.title = "Homepage";
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       setIsScrolled(scrollTop > 50);
@@ -234,274 +238,258 @@ export default function Home() {
           </svg>
         </button>
       )}
-      {/* Modern Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-black/80 shadow-2xl py-5' 
-          : 'bg-transparent py-10'
-      }`}>
+      {/* Header - Matching Flex Living Style */}
+      <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
-              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
-                isScrolled ? 'bg-blue-600 shadow-lg' : 'bg-white/20 backdrop-blur-sm'
-              }`}>
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
               </div>
               <button 
                 onClick={scrollToTop}
-                className={`font-bold tracking-tight transition-all duration-500 hover:scale-105 ${
-                  isScrolled 
-                    ? 'text-white text-3xl' 
-                    : 'text-white text-4xl drop-shadow-2xl'
-                }`}
+                className="font-bold text-2xl text-gray-900 hover:text-blue-600 transition-colors duration-200"
               >
                 Flex Living
               </button>
             </div>
-            <nav className="hidden md:flex space-x-12 ml-auto">
-              <Link href="#properties" className={`font-bold transition-all duration-300 hover:scale-105 relative group pb-2 ${
-                isScrolled ? 'text-xl text-white hover:text-blue-400' : 'text-2xl text-white drop-shadow-lg hover:text-blue-400'
-              }`}>
-                Properties
-                  <span className="absolute -bottom-2 left-0 w-0 h-1 bg-blue-400 transition-all duration-300 group-hover:w-full rounded-full"></span>
+            <nav className="hidden md:flex space-x-8">
+              <Link href="#properties" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
+                All listings
               </Link>
-              <Link href="#about" className={`font-bold transition-all duration-300 hover:scale-105 relative group pb-2 ${
-                isScrolled ? 'text-xl text-white hover:text-blue-400' : 'text-2xl text-white drop-shadow-lg hover:text-blue-400'
-              }`}>
-                About
-                  <span className="absolute -bottom-2 left-0 w-0 h-1 bg-blue-400 transition-all duration-300 group-hover:w-full rounded-full"></span>
+              <Link href="#about" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
+                About Us
               </Link>
-              <Link href="#contact" className={`font-bold transition-all duration-300 hover:scale-105 relative group pb-2 ${
-                isScrolled ? 'text-xl text-white hover:text-blue-400' : 'text-2xl text-white drop-shadow-lg hover:text-blue-400'
-              }`}>
-                Contact
-                  <span className="absolute -bottom-2 left-0 w-0 h-1 bg-blue-400 transition-all duration-300 group-hover:w-full rounded-full"></span>
+              <Link href="#contact" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
+                Contact Us
               </Link>
             </nav>
           </div>
         </div>
       </header>
 
-      {/* Modern Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Hero Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3840&q=100"
-            alt="Luxury London apartment with modern interior and city skyline view"
-            className="w-full h-full object-cover opacity-90"
-          />
-          <div className="absolute inset-0 bg-black/60"></div>
-        </div>
+      {/* Hero Section - Matching Flex Living Style */}
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white">
+        <div className="absolute inset-0 bg-white"></div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-5xl mx-auto">
-            <div className="mb-8 animate-on-scroll">
-              <div className="inline-flex items-center px-6 py-3 bg-white/20 rounded-full border border-white/30 mb-6">
-                <svg className="w-5 h-5 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-white font-semibold">Premium London Properties</span>
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              Flex Living - Made Easy
+            </h1>
+            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              Furnished Apartments designed with you in Mind. All you have to do is unpack your bags and start living. 
+              We&apos;re flexible, so you can move-in and move-out on the dates you need.
+            </p>
+          </div>
+
+          {/* Search Form - Matching Flex Living Style */}
+          <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {/* Location */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Location</label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Any location"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  />
+                  <svg className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Check-in */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Check-in</label>
+                <input
+                  type="date"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                />
+              </div>
+
+              {/* Check-out */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Check-out</label>
+                <input
+                  type="date"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                />
+              </div>
+
+              {/* Guests */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Guests</label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
               </div>
             </div>
-            
-            <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 leading-tight animate-on-scroll drop-shadow-2xl">
-              <span className="text-white">
-                Redefining
-              </span>
-              <br />
-              <span className="text-white">London Living</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-100 mb-16 leading-relaxed animate-on-scroll drop-shadow-lg max-w-4xl mx-auto">
-              Experience the pinnacle of luxury short-term rentals in London&apos;s most prestigious neighborhoods. 
-              Our carefully curated properties combine exceptional design, prime locations, and unmatched service 
-              to create unforgettable stays for discerning guests.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-6 justify-center animate-on-scroll">
-              <Link 
-                href="#properties"
-                className="group bg-blue-600 text-white px-12 py-5 text-lg font-bold hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-2xl rounded-2xl border border-white/20"
-              >
-                <span className="flex items-center justify-center">
-                  Explore Properties
-                  <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </span>
-              </Link>
-              <Link 
-                href="#about"
-                className="group bg-white/20 border-2 border-white/40 text-white px-12 py-5 text-lg font-semibold hover:bg-white hover:text-gray-900 transition-all duration-300 hover:scale-105 hover:shadow-2xl rounded-2xl"
-              >
-                <span className="flex items-center justify-center">
-                  Learn More
-                  <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                </span>
-              </Link>
+
+            {/* Search Button */}
+            <div className="mt-6">
+              <button className="w-full bg-blue-600 text-white py-4 px-8 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-all duration-200 hover:shadow-lg">
+                Search
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Modern Properties Section */}
-      <section id="properties" className="py-32 bg-white">
+      {/* Properties Section - Matching Flex Living Style */}
+      <section id="properties" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-24">
-            <div className="inline-flex items-center px-6 py-3 bg-blue-100 rounded-full border border-blue-200 mb-8">
-              <svg className="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-              </svg>
-              <span className="text-blue-800 font-semibold">Premium Collection</span>
-            </div>
-            <h3 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8 animate-on-scroll">
-              Our Properties
-            </h3>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto animate-on-scroll leading-relaxed">
-              Handpicked accommodations for every need, carefully selected in London&apos;s most desirable neighborhoods. 
-              Each property is meticulously curated to provide an exceptional living experience.
-            </p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our top properties</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {properties.map((property, index) => (
               <div 
                 key={property.id} 
-                className="bg-white rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col group animate-on-scroll border border-gray-100 hover:border-blue-200"
-                style={{ transitionDelay: `${index * 150}ms` }}
+                className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100 flex flex-col"
               >
-                <div className="relative overflow-hidden">
+                <div className="relative">
                   <img 
                     src={property.image} 
                     alt={property.name}
-                    className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-300"></div>
-                  <div className="absolute top-4 right-4">
-                    <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center">
-                      <svg className="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <span className="text-sm font-bold text-gray-900">{property.rating}</span>
+                  <div className="absolute top-3 right-3">
+                    <div className="bg-white rounded-full px-2 py-1 flex items-center shadow-sm">
+                      <div className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <svg key={i} className="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                        <span className="text-xs font-semibold text-gray-700 ml-1">{property.rating}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="p-8 flex flex-col flex-grow">
-                  <h4 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">{property.name}</h4>
-                  <p className="text-gray-600 text-sm mb-4 flex items-center">
-                    <svg className="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    {property.address}
-                  </p>
-                  <p className="text-gray-700 text-sm mb-6 line-clamp-2 flex-grow leading-relaxed">{property.description}</p>
+                <div className="p-4 flex flex-col flex-grow">
+                  {/* Property Title - Fixed Height */}
+                  <div className="mb-3 h-12 flex items-start">
+                    <h3 className="font-semibold text-gray-900 text-lg group-hover:text-blue-600 transition-colors duration-200 leading-tight">
+                      {property.name}
+                    </h3>
+                  </div>
                   
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="text-3xl font-bold text-blue-600">
-                      {property.price}
+                  {/* Guest Info - Fixed Height */}
+                  <div className="mb-3 h-5 flex items-center">
+                    <div className="text-sm text-gray-600">
+                      <span className="font-medium">{property.name.split(' - ')[0]}</span> guests
+                      <span className="mx-1">•</span>
+                      <span>{property.name.includes('Bed') ? property.name.match(/\d+B/)?.[0] || '1B' : 'Studio'}</span>
+                      <span className="mx-1">•</span>
+                      <span>{property.name.includes('Bed') ? '1 bath' : '1 bath'}</span>
                     </div>
                   </div>
                   
-                  <Link 
-                    href={`/property/${property.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group/btn w-full bg-blue-600 text-white text-center py-4 px-6 font-bold hover:bg-blue-700 transition-all duration-300 mt-auto rounded-2xl hover:scale-105 hover:shadow-xl flex items-center justify-center"
-                  >
-                    <span>View Details & Reviews</span>
-                    <svg className="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </Link>
+                  {/* Amenities - Fixed Height */}
+                  <div className="mb-4 h-5 flex items-center">
+                    <div className="text-sm text-gray-600">
+                      <span className="inline-flex items-center">
+                        <svg className="w-4 h-4 text-gray-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Free WiFi
+                      </span>
+                      <span className="mx-2">•</span>
+                      <span>Internet</span>
+                      <span className="mx-2">•</span>
+                      <span>Private living room</span>
+                    </div>
+                  </div>
+                  
+                  {/* Spacer to push price/action to bottom */}
+                  <div className="flex-grow"></div>
+                  
+                  {/* Price and Action - Fixed at bottom */}
+                  <div className="flex items-center justify-between h-8">
+                    <div className="text-lg font-bold text-gray-900">
+                      {property.price}
+                    </div>
+                    <Link 
+                      href={`/property/${property.id}`}
+                      className="text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors duration-200"
+                    >
+                      View Details →
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
+
+          <div className="text-center mt-12">
+            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200">
+              Explore all properties (180)
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* Modern About Section */}
-      <section id="about" className="py-32 bg-slate-900 relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat'
-          }}></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-24">
-            <div className="inline-flex items-center px-6 py-3 bg-white/20 rounded-full border border-white/30 mb-8">
-              <svg className="w-5 h-5 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              <span className="text-white font-semibold">Our Values</span>
-            </div>
-            <h3 className="text-5xl md:text-6xl font-bold text-white mb-8 animate-on-scroll">
-              <span className="text-white">
-                Flex Living
-              </span>
-              <br />
-              <span className="text-white">Values</span>
-            </h3>
-            <p className="text-xl text-gray-200 max-w-4xl mx-auto animate-on-scroll leading-relaxed">
-              Performance, partnership, integrity, and trust. These core values are crucial to our philosophy, 
-              service approach, and culture. They guide every decision we make and every interaction we have.
+      {/* About Section - Matching Flex Living Style */}
+      <section id="about" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Flexible Renting Guarantee</h2>
+            <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              The Flex Living brand upholds the same quality, standards and policies across all apartments, 
+              so you know exactly what to expect wherever you go. Our round-the-clock support team, unique design 
+              transformations and corporate suitability make us more than just a short-let management company.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 icon: (
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                ),
-                title: "Premium Properties",
-                description: "Carefully selected accommodations in London's best neighborhoods, ensuring every stay exceeds expectations."
-              },
-              {
-                icon: (
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 ),
-                title: "Verified Reviews",
-                description: "Real guest experiences to help you make the perfect choice, with transparent and honest feedback."
+                title: "Quality Guarantee",
+                description: "Consistent standards across all our properties, ensuring you know exactly what to expect."
               },
               {
                 icon: (
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5z" />
                   </svg>
                 ),
-                title: "Perfect Locations",
-                description: "Prime locations with easy access to London's top attractions, business districts, and cultural landmarks."
+                title: "24/7 Support",
+                description: "Round-the-clock support team to assist you whenever you need help."
+              },
+              {
+                icon: (
+                  <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                ),
+                title: "Corporate Ready",
+                description: "Professional service and unique design transformations for business travelers."
               }
             ].map((value, index) => (
-              <div 
-                key={index}
-                className="text-center animate-on-scroll group"
-                style={{ transitionDelay: `${index * 200}ms` }}
-              >
-                <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 border border-gray-100">
-                  <div className="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                    {value.icon}
-                  </div>
-                  <h4 className="text-2xl font-bold text-gray-900 mb-6 group-hover:text-blue-600 transition-colors duration-300">{value.title}</h4>
-                  <p className="text-gray-600 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">{value.description}</p>
+              <div key={index} className="text-center bg-white rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                  {value.icon}
                 </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">{value.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{value.description}</p>
               </div>
             ))}
           </div>
@@ -582,66 +570,63 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Modern Footer */}
-      <footer className="bg-slate-900 text-white py-20 relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat'
-          }}></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+      {/* Footer - Matching Flex Living Style */}
+      <footer className="bg-white border-t border-gray-200 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mr-4">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                   </svg>
                 </div>
-                <h4 className="text-3xl font-bold text-white">Flex Living</h4>
+                <h4 className="text-2xl font-bold text-gray-900">Flex Living</h4>
               </div>
-              <p className="text-gray-300 mb-8 max-w-md leading-relaxed text-lg">
+              <p className="text-gray-600 mb-6 max-w-md leading-relaxed">
                 Your gateway to London&apos;s finest short-term rentals. We believe in creating real value for our guests 
                 and supporting the communities we work in.
               </p>
+              <div className="flex space-x-4">
+                <a href="tel:+447723745646" className="text-blue-600 hover:text-blue-700 font-medium">
+                  +447723745646
+                </a>
+                <a href="mailto:info@theflexliving.com" className="text-blue-600 hover:text-blue-700 font-medium">
+                  info@theflexliving.com
+                </a>
+              </div>
             </div>
             
             <div>
-              <h5 className="text-xl font-bold mb-6 text-white">Properties</h5>
-              <ul className="space-y-3">
-                <li><Link href="/property/29-shoreditch-heights" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">Shoreditch Heights</Link></li>
-                <li><Link href="/property/15-camden-square" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">Camden Square</Link></li>
-                <li><Link href="/property/42-kings-cross" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">King&apos;s Cross</Link></li>
-                <li><Link href="/property/88-notting-hill" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">Notting Hill</Link></li>
+              <h5 className="text-lg font-semibold mb-4 text-gray-900">All listings</h5>
+              <ul className="space-y-2">
+                <li><Link href="/property/29-shoreditch-heights" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">Shoreditch Heights</Link></li>
+                <li><Link href="/property/15-camden-square" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">Camden Square</Link></li>
+                <li><Link href="/property/42-kings-cross" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">King&apos;s Cross</Link></li>
+                <li><Link href="/property/88-notting-hill" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">Notting Hill</Link></li>
               </ul>
             </div>
             
             <div>
-              <h5 className="text-xl font-bold mb-6 text-white">Company</h5>
-              <ul className="space-y-3">
-                <li><Link href="#about" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">About Us</Link></li>
-                <li><Link href="#contact" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">Contact</Link></li>
+              <h5 className="text-lg font-semibold mb-4 text-gray-900">Company</h5>
+              <ul className="space-y-2">
+                <li><Link href="#about" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">About Us</Link></li>
+                <li><Link href="#contact" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">Contact Us</Link></li>
+                <li><a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">Privacy Policy</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">Terms and conditions</a></li>
               </ul>
             </div>
           </div>
           
-          <div className="mt-16 pt-8 border-t border-gray-700/50">
+          <div className="mt-12 pt-8 border-t border-gray-200">
             <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-gray-400 text-sm">&copy; 2024 Flex Living. All rights reserved.</p>
-              <p className="text-gray-400 text-sm mt-2 md:mt-0">Authorised and regulated by the Financial Conduct Authority</p>
-            </div>
-            
-            {/* Developer Credit */}
-            <div className="mt-8 pt-8 border-t border-gray-700/50">
-      <div className="text-center">
+              <p className="text-gray-500 text-sm">&copy; 2024 Flex Living. All rights reserved.</p>
+              <div className="mt-4 md:mt-0">
                 <p className="text-gray-500 text-sm">
                   Website built by{' '}
                   <a 
                     href="mailto:ryanlink74@outlook.com?subject=Website Inquiry" 
-                    className="text-blue-400 hover:text-blue-300 transition-colors duration-300 hover:underline font-medium"
+                    className="text-blue-600 hover:text-blue-700 transition-colors duration-200 hover:underline font-medium"
                   >
                     ryanlink74@outlook.com
                   </a>
@@ -649,7 +634,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-      </div>
+        </div>
       </footer>
 
       {/* Floating Developer Button */}
