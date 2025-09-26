@@ -1,4 +1,5 @@
 import database from '../../../../../lib/database.js';
+import { approvedReviewsStorage } from '../../../../../lib/approvedReviewsStorage.js';
 
 // GET - Get all approved reviews
 export async function GET() {
@@ -45,6 +46,7 @@ export async function POST(request) {
       case 'approve':
         try {
           database.approveReviews(reviewIds);
+          approvedReviewsStorage.approveReviews(reviewIds);
         } catch (error) {
           console.error('Error approving reviews:', error);
           return Response.json({ error: 'Failed to approve reviews' }, { status: 500 });
@@ -53,6 +55,7 @@ export async function POST(request) {
       case 'reject':
         try {
           reviewIds.forEach(id => database.rejectReview(id));
+          reviewIds.forEach(id => approvedReviewsStorage.rejectReview(id));
         } catch (error) {
           console.error('Error rejecting reviews:', error);
           return Response.json({ error: 'Failed to reject reviews' }, { status: 500 });
@@ -62,6 +65,7 @@ export async function POST(request) {
         try {
           const allReviewIds = database.getReviews().map(r => r.id);
           database.approveReviews(allReviewIds);
+          approvedReviewsStorage.approveReviews(allReviewIds);
         } catch (error) {
           console.error('Error approving all reviews:', error);
           return Response.json({ error: 'Failed to approve all reviews' }, { status: 500 });
@@ -70,6 +74,7 @@ export async function POST(request) {
       case 'reject_all':
         try {
           database.rejectAllReviews();
+          approvedReviewsStorage.rejectAllReviews();
         } catch (error) {
           console.error('Error rejecting all reviews:', error);
           return Response.json({ error: 'Failed to reject all reviews' }, { status: 500 });
