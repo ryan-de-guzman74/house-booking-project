@@ -4,6 +4,7 @@ import database from '../../../../../lib/database.js';
 export async function GET() {
   try {
     const approvedReviews = database.getApprovedReviewsData();
+    console.log('Approved reviews:', approvedReviews);
     return Response.json({ 
       approvedReviews,
       count: approvedReviews.length 

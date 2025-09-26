@@ -110,6 +110,7 @@ export default function PropertyPage() {
           .then(res => res.json())
           .then(data => {
             // Create mapping from property ID to listing name
+            console.log("approved reviews: ", data);
             const propertyToListingMapping = {
               "29-shoreditch-heights": "2B N1 A - 29 Shoreditch Heights",
               "15-camden-square": "1B N2 B - 15 Camden Square",
