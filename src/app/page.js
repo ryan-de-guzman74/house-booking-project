@@ -317,7 +317,7 @@ export default function Home() {
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-100 mb-16 leading-relaxed animate-on-scroll drop-shadow-lg max-w-4xl mx-auto">
-              Experience the pinnacle of luxury short-term rentals in London's most prestigious neighborhoods. 
+              Experience the pinnacle of luxury short-term rentals in London&apos;s most prestigious neighborhoods. 
               Our carefully curated properties combine exceptional design, prime locations, and unmatched service 
               to create unforgettable stays for discerning guests.
             </p>
@@ -364,7 +364,7 @@ export default function Home() {
               Our Properties
             </h3>
             <p className="text-xl text-gray-600 max-w-4xl mx-auto animate-on-scroll leading-relaxed">
-              Handpicked accommodations for every need, carefully selected in London's most desirable neighborhoods. 
+              Handpicked accommodations for every need, carefully selected in London&apos;s most desirable neighborhoods. 
               Each property is meticulously curated to provide an exceptional living experience.
             </p>
           </div>
@@ -523,7 +523,7 @@ export default function Home() {
             </h2>
             <p className="text-xl text-gray-600 max-w-4xl mx-auto animate-on-scroll leading-relaxed">
               Have questions about our properties or need assistance with your booking? 
-              We're here to help you find the perfect London accommodation.
+              We&apos;re here to help you find the perfect London accommodation.
             </p>
           </div>
 
@@ -604,7 +604,7 @@ export default function Home() {
                 <h4 className="text-3xl font-bold text-white">Flex Living</h4>
               </div>
               <p className="text-gray-300 mb-8 max-w-md leading-relaxed text-lg">
-                Your gateway to London's finest short-term rentals. We believe in creating real value for our guests 
+                Your gateway to London&apos;s finest short-term rentals. We believe in creating real value for our guests 
                 and supporting the communities we work in.
               </p>
             </div>
@@ -614,7 +614,7 @@ export default function Home() {
               <ul className="space-y-3">
                 <li><Link href="/property/29-shoreditch-heights" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">Shoreditch Heights</Link></li>
                 <li><Link href="/property/15-camden-square" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">Camden Square</Link></li>
-                <li><Link href="/property/42-kings-cross" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">King's Cross</Link></li>
+                <li><Link href="/property/42-kings-cross" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">King&apos;s Cross</Link></li>
                 <li><Link href="/property/88-notting-hill" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">Notting Hill</Link></li>
               </ul>
             </div>

@@ -143,7 +143,7 @@ export default function PropertyPage() {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [params.id]);
+  }, [params.id, mockProperties]);
 
   const scrollToTop = () => {
     // Navigate to landing page first, then scroll to top
@@ -171,7 +171,7 @@ export default function PropertyPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h3 className="text-xl font-bold text-red-600 mb-2">Property Not Found</h3>
-          <p className="text-gray-600 mb-6">The property with ID "{params.id}" could not be found.</p>
+          <p className="text-gray-600 mb-6">The property with ID &quot;{params.id}&quot; could not be found.</p>
           <Link href="/" className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
             Back to Home
           </Link>
@@ -488,7 +488,7 @@ export default function PropertyPage() {
               <ul className="space-y-3">
                 <li><Link href="/property/29-shoreditch-heights" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">Shoreditch Heights</Link></li>
                 <li><Link href="/property/15-camden-square" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">Camden Square</Link></li>
-                <li><Link href="/property/42-kings-cross" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">King's Cross</Link></li>
+                <li><Link href="/property/42-kings-cross" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">King&apos;s Cross</Link></li>
                 <li><Link href="/property/88-notting-hill" className="text-gray-300 hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block">Notting Hill</Link></li>
               </ul>
             </div>

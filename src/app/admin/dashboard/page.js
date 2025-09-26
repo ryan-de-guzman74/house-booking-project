@@ -174,8 +174,6 @@ export default function AdminDashboardPage() {
           clearInterval(pollingInterval);
         }
       }
-      // Also refresh property data periodically to get updates
-      await loadPropertyData();
     }, 2000);
     
     // Set up 10-second timeout
@@ -197,7 +195,7 @@ export default function AdminDashboardPage() {
       clearTimeout(timeoutId);
       clearInterval(pollingInterval);
     };
-  }, []);
+  }, [countdown]);
 
   // Handle approve/reject toggle
   const toggleApproval = async (reviewId) => {

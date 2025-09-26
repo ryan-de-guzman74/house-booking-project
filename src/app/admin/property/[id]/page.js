@@ -189,7 +189,7 @@ export default function AdminPropertyPage() {
     };
 
     loadProperty();
-  }, [propertyId, isApiActive]);
+  }, [propertyId, isApiActive, mockProperties]);
 
   const handleEdit = () => {
     setEditing(true);
