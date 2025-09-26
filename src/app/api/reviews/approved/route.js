@@ -1,16 +1,19 @@
-import database from '../../../../lib/database.js';
+import mockData from '@/lib/mockData.js';
 
-// GET - Get all approved reviews (public API for property pages)
+// GET - Get all reviews (public API for property pages)
+// For now, return all reviews since approved reviews don't persist in serverless
 export async function GET() {
   try {
-    const approvedReviews = database.getApprovedReviewsData();
+    // Use mock data directly for now
+    // In a real production app, you'd use a persistent database
+    const allReviews = mockData.reviews || [];
     
     return Response.json({ 
-      approvedReviews,
-      count: approvedReviews.length 
+      approvedReviews: allReviews,
+      count: allReviews.length 
     });
   } catch (error) {
-    console.error('Error fetching approved reviews:', error);
-    return Response.json({ error: 'Failed to fetch approved reviews' }, { status: 500 });
+    console.error('Error fetching reviews:', error);
+    return Response.json({ error: 'Failed to fetch reviews' }, { status: 500 });
   }
 }
