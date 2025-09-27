@@ -1,12 +1,19 @@
-import database from '../../../../../lib/database.js';
+import { getMockReviews } from '../../../../../lib/mockData.js';
 import { approvedReviewsStorage } from '../../../../../lib/approvedReviewsStorage.js';
 import { approveReviews as mockDataApproveReviews, rejectReview as mockDataRejectReview, rejectAllReviews as mockDataRejectAllReviews } from '../../../../../lib/mockData.js';
 
 // GET - Get all approved reviews
 export async function GET() {
   try {
-    const approvedReviews = database.getApprovedReviewsData();
-    console.log('Approved reviews:', approvedReviews);
+    // Initialize with mock data to ensure consistency across serverless instances
+    const mockReviews = getMockReviews();
+    
+    // Get approved reviews using the shared storage
+    const approvedReviews = approvedReviewsStorage.getApprovedReviews(mockReviews.reviews);
+    
+    console.log(`Found ${approvedReviews.length} approved reviews out of ${mockReviews.reviews.length} total reviews`);
+    console.log('Approved review IDs:', approvedReviewsStorage.getApprovedIds());
+    
     return Response.json({ 
       approvedReviews,
       count: approvedReviews.length 
@@ -46,7 +53,6 @@ export async function POST(request) {
     switch (action) {
       case 'approve':
         try {
-          database.approveReviews(reviewIds);
           approvedReviewsStorage.approveReviews(reviewIds);
           mockDataApproveReviews(reviewIds); // Update mockData.js
         } catch (error) {
@@ -56,7 +62,6 @@ export async function POST(request) {
         break;
       case 'reject':
         try {
-          reviewIds.forEach(id => database.rejectReview(id));
           reviewIds.forEach(id => approvedReviewsStorage.rejectReview(id));
           reviewIds.forEach(id => mockDataRejectReview(id)); // Update mockData.js
         } catch (error) {
@@ -66,8 +71,8 @@ export async function POST(request) {
         break;
       case 'approve_all':
         try {
-          const allReviewIds = database.getReviews().map(r => r.id);
-          database.approveReviews(allReviewIds);
+          const mockReviews = getMockReviews();
+          const allReviewIds = mockReviews.reviews.map(r => r.id);
           approvedReviewsStorage.approveReviews(allReviewIds);
           mockDataApproveReviews(allReviewIds); // Update mockData.js
         } catch (error) {
@@ -77,7 +82,6 @@ export async function POST(request) {
         break;
       case 'reject_all':
         try {
-          database.rejectAllReviews();
           approvedReviewsStorage.rejectAllReviews();
           mockDataRejectAllReviews(); // Update mockData.js
         } catch (error) {
@@ -92,7 +96,7 @@ export async function POST(request) {
     return Response.json({ 
       success: true, 
       message: `Reviews ${action}ed successfully`,
-      approvedCount: database.getApprovedReviews().length
+      approvedCount: approvedReviewsStorage.getApprovedIds().length
     });
   } catch (error) {
     console.error('Error updating review approval:', error);
