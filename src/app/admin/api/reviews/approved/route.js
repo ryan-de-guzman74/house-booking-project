@@ -1,5 +1,6 @@
 import database from '../../../../../lib/database.js';
 import { approvedReviewsStorage } from '../../../../../lib/approvedReviewsStorage.js';
+import { approveReviews as mockDataApproveReviews, rejectReview as mockDataRejectReview, rejectAllReviews as mockDataRejectAllReviews } from '../../../../../lib/mockData.js';
 
 // GET - Get all approved reviews
 export async function GET() {
@@ -47,6 +48,7 @@ export async function POST(request) {
         try {
           database.approveReviews(reviewIds);
           approvedReviewsStorage.approveReviews(reviewIds);
+          mockDataApproveReviews(reviewIds); // Update mockData.js
         } catch (error) {
           console.error('Error approving reviews:', error);
           return Response.json({ error: 'Failed to approve reviews' }, { status: 500 });
@@ -56,6 +58,7 @@ export async function POST(request) {
         try {
           reviewIds.forEach(id => database.rejectReview(id));
           reviewIds.forEach(id => approvedReviewsStorage.rejectReview(id));
+          reviewIds.forEach(id => mockDataRejectReview(id)); // Update mockData.js
         } catch (error) {
           console.error('Error rejecting reviews:', error);
           return Response.json({ error: 'Failed to reject reviews' }, { status: 500 });
@@ -66,6 +69,7 @@ export async function POST(request) {
           const allReviewIds = database.getReviews().map(r => r.id);
           database.approveReviews(allReviewIds);
           approvedReviewsStorage.approveReviews(allReviewIds);
+          mockDataApproveReviews(allReviewIds); // Update mockData.js
         } catch (error) {
           console.error('Error approving all reviews:', error);
           return Response.json({ error: 'Failed to approve all reviews' }, { status: 500 });
@@ -75,6 +79,7 @@ export async function POST(request) {
         try {
           database.rejectAllReviews();
           approvedReviewsStorage.rejectAllReviews();
+          mockDataRejectAllReviews(); // Update mockData.js
         } catch (error) {
           console.error('Error rejecting all reviews:', error);
           return Response.json({ error: 'Failed to reject all reviews' }, { status: 500 });

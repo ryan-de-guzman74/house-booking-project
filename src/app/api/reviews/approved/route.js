@@ -1,17 +1,14 @@
-import mockData from '@/lib/mockData.js';
+import database from '@/lib/database.js';
 import { approvedReviewsStorage } from '@/lib/approvedReviewsStorage.js';
 
 // GET - Get approved reviews (public API for property pages)
 export async function GET() {
   try {
-    const allReviews = mockData.reviews || [];
+    // Use the same data source as the admin API for consistency
+    const approvedReviews = database.getApprovedReviewsData();
     
-    // Get only the approved reviews using the shared storage
-    const approvedReviews = approvedReviewsStorage.getApprovedReviews(allReviews);
-    
-    console.log(`Found ${approvedReviews.length} approved reviews out of ${allReviews.length} total reviews`);
-    console.log('Approved review IDs:', approvedReviewsStorage.getApprovedIds());
-    console.log('Approved reviews:', approvedReviews.map(r => ({ id: r.id, guest: r.guest })));
+    console.log(`Found ${approvedReviews.length} approved reviews from database`);
+    console.log('Approved reviews:', approvedReviews.map(r => ({ id: r.id, guest: r.guest, status: 'published' })));
     
     return Response.json({ 
       approvedReviews,

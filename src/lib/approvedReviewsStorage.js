@@ -3,13 +3,8 @@
 
 let approvedReviewIds = new Set();
 
-// Initialize with some default approved reviews
-if (approvedReviewIds.size === 0) {
-  // Add some default approved reviews
-  approvedReviewIds.add(7453);
-  approvedReviewIds.add(7454);
-  approvedReviewIds.add(7455);
-}
+// Initialize with no approved reviews - start empty
+// Reviews will only be approved through the admin dashboard
 
 export const approvedReviewsStorage = {
   // Get all approved review IDs

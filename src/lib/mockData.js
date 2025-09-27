@@ -70,7 +70,7 @@ let mockData = {
     {
       id: 7453,
       type: "host-to-guest",
-      status: "published",
+      status: "pending",
       publicReview: "Shane and family are wonderful! Would definitely host again :)",
       reviewCategory: [
         { category: "cleanliness", rating: 10 },
@@ -84,7 +84,7 @@ let mockData = {
     {
       id: 7454,
       type: "guest-to-host",
-      status: "published",
+      status: "pending",
       publicReview: "Amazing stay! The apartment was spotless and the location was perfect. Highly recommend!",
       reviewCategory: [
         { category: "cleanliness", rating: 9 },
@@ -100,7 +100,7 @@ let mockData = {
     {
       id: 7455,
       type: "guest-to-host",
-      status: "published",
+      status: "pending",
       publicReview: "Great location and very clean. The host was very responsive to our needs.",
       reviewCategory: [
         { category: "cleanliness", rating: 8 },
@@ -116,7 +116,7 @@ let mockData = {
     {
       id: 7456,
       type: "guest-to-host",
-      status: "published",
+      status: "pending",
       publicReview: "Absolutely beautiful apartment in a fantastic location. The amenities were top-notch!",
       reviewCategory: [
         { category: "cleanliness", rating: 10 },
@@ -133,7 +133,7 @@ let mockData = {
     {
       id: 7457,
       type: "guest-to-host",
-      status: "published",
+      status: "pending",
       publicReview: "Perfect for a business trip. Clean, modern, and well-equipped.",
       reviewCategory: [
         { category: "cleanliness", rating: 9 },
@@ -238,6 +238,43 @@ function getExpectedOldName(propertyId) {
     "88-notting-hill": "3B N4 D - 88 Notting Hill"
   };
   return mapping[propertyId];
+}
+
+// Update review approval status
+export function updateReviewStatus(reviewId, status) {
+  const review = mockData.reviews.find(r => r.id === reviewId);
+  if (review) {
+    review.status = status;
+    console.log(`Updated review ${reviewId} status to: ${status}`);
+    return true;
+  }
+  console.log(`Review ${reviewId} not found`);
+  return false;
+}
+
+// Approve multiple reviews
+export function approveReviews(reviewIds) {
+  reviewIds.forEach(id => updateReviewStatus(id, 'published'));
+  console.log(`Approved ${reviewIds.length} reviews in mockData`);
+}
+
+// Reject a review
+export function rejectReview(reviewId) {
+  updateReviewStatus(reviewId, 'pending');
+  console.log(`Rejected review ${reviewId} in mockData`);
+}
+
+// Reject all reviews
+export function rejectAllReviews() {
+  mockData.reviews.forEach(review => {
+    review.status = 'pending';
+  });
+  console.log('Rejected all reviews in mockData');
+}
+
+// Get approved reviews
+export function getApprovedReviews() {
+  return mockData.reviews.filter(review => review.status === 'published');
 }
 
 export default mockData;
