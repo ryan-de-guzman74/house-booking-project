@@ -7,7 +7,6 @@ export async function GET() {
     // Use the same data source as the admin API for consistency
     const approvedReviews = database.getApprovedReviewsData();
     
-    console.log(`Found ${approvedReviews.length} approved reviews from database`);
     console.log('Approved reviews:', approvedReviews.map(r => ({ id: r.id, guest: r.guest, status: 'published' })));
     
     return Response.json({ 
